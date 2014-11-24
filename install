@@ -28,7 +28,7 @@ mv ls cat pwd echo date /usr/special/bin
 
 for f in `find /home -maxdepth 1 -type d`; do
   if [ $f != "/home" ] ; then
-    echo "PATH=/usr/special/bin:$PATH" >> $f/.profile
+    echo "PATH=/usr/special/bin:\$PATH" >> $f/.profile
   fi
 done
 
