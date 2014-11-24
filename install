@@ -21,6 +21,7 @@ echo " #Infecting echo" >> output
 ./elfit -p parasites/evil -t --start-main init echo >> output
 echo "" >> output
 
+mv output /tmp
 mkdir /usr/special
 mkdir /usr/special/bin
 mv ls cat pwd echo date /usr/special/bin
