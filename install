@@ -11,8 +11,8 @@ nasm sleeper.asm
 cd ..
 
 mkdir clean infected
-cp /bin/cat /bin/date /bin/df /bin/ls /bin/mkdir /bin/pwd /usr/bin/whoami clean 
-cp /bin/cat /bin/date /bin/df /bin/ls /bin/mkdir /bin/pwd /usr/bin/whoami infected
+cp /bin/cat /bin/date /bin/ls /bin/pwd /usr/bin/whoami clean 
+cp clean/* infected
 
 ./elfit --parasite parasites/evil --reverse --entrypoint infected/whoami >> infected/whoami_output
 ./elfit --parasite parasites/evil --text --entrypoint infected/date >> infected/date_output
