@@ -6,6 +6,7 @@ make
 
 cd parasites
 nasm evil64.asm
+nasm evil.asm
 nasm shellsocket.asm
 nasm sleeper.asm
 cd ..
